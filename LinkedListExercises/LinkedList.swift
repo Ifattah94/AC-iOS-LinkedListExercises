@@ -26,21 +26,100 @@ public class LinkedList<T: Equatable> {
         }
     }
 
-    var count: Int {return 0}
+    var count: Int {
+        var node = head
+        var num = 0
+        while node != nil {
+            num += 1
+            node = node!.next
+        }
+        return num
+    }
     
-    func append(element newKey: T) {}
+    func append(element newKey: T) {
+        var node = head
+        while node != nil {
+            if node?.next == nil {
+                node?.next = Node(key: newKey)
+                return
+                
+            }
+            node = node?.next
+        }
+    }
     
-    func getNode<T>(at index: Int) -> Node<T>? {return nil}
+    func getNode(at index: Int) -> Node<T>? {
+        var currentIndex = 0
+        let node = head
+        while node != nil {
+            if currentIndex == index {
+                return node
+            }
+            currentIndex += 1
+        }
+        return nil
+        
+    }
     
-    func contains<T>(element targetKey: T) -> Bool {return false}
+    func contains(element targetKey: T) -> Bool {
+        var node = head
+        while node != nil {
+            if node?.key == targetKey {
+                return true
+            }
+            node = node?.next
+        }
+        return false
+        
+    }
     
-    func equals<T>(otherList: LinkedList<T>) -> Bool {return true}
+    func equals(otherList: LinkedList<T>) -> Bool {
+        var node = head
+        while node != nil {
+            guard let nodeKey = node?.key else {
+                continue
+            }
+            if !otherList.contains(element: nodeKey) {
+                return false
+            }
+            node = node?.next
+        }
+        return true
+        
+    }
     
-    func toArr<T>() -> [T] {return Array<T>()}
+    func toArr() -> [T] {
+        var newArr = [T]()
+        var node = head
+        while node != nil {
+
+            newArr.append((node?.key)!)
+            node = node?.next
+        }
+        return newArr
+        
+    }
     
-    func reversed<T>() -> LinkedList<T> {return LinkedList<T>()}
+    func reversed() -> LinkedList<T> {
+        var newList = LinkedList()
+        
+        let reversedArr = Array(newList.toArr().reversed())
+        for i in reversedArr {
+            newList.append(element: i)
+            return newList
+        }
+        return newList
+        
+        
+    }
     
-    func removeAll() {}
+    func removeAll() {
+        var node = head
+        while node != nil {
+            node = nil
+        }
+        node?.next = node
+    }
     
     //Challenge Questions
     func removeDuplicatesFromSortedList() {}
